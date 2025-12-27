@@ -1,0 +1,66 @@
+.timetable {
+  width: 100%;
+  border-collapse: collapse;
+  background: #0b1220;
+  color: #e5e7eb;
+}
+
+.timetable th,
+.timetable td {
+  border: 1px solid #334155;
+  padding: 6px;
+  text-align: center;
+  font-size: 13px;
+}
+
+.day {
+  font-weight: bold;
+  background: #020617;
+}
+
+.break {
+  background: #1e293b;
+  font-weight: bold;
+}
+
+.lunch {
+  background: #312e81;
+}
+
+.free {
+  color: #64748b;
+}
+
+.subject {
+  font-weight: bold;
+  color: #e0f2fe;
+}
+
+.teacher {
+  font-size: 13px;
+  color: #93c5fd;
+}
+
+.room {
+  font-size: 12px;
+  color: #cbd5f5;
+}
+
+.lab {
+  background: #1e3a8a;
+}
+
+.lab-details {
+  margin-top: 4px;
+  font-size: 12px;
+}
+
+.lab-row {
+  color: #fde68a;
+  margin-bottom: 2px;
+}
+
+.lab-subject {
+  color: #a5f3fc;
+  font-weight: 600;
+}
