@@ -1,42 +1,121 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #ffffff;
+  color: #111827;
+}
+
+/* FULL SCREEN CENTER */
+.landing {
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* 🔥 BIGGER TITLE */
+.landing-title {
+  font-size: 4.2rem;      /* ⬆️ increased */
+  font-weight: 800;
+  margin-bottom: 20px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* 🔥 BIGGER SUBTITLE */
+.landing-subtitle {
+  font-size: 1.5rem;      /* ⬆️ increased */
+  color: #6b7280;
+  margin-bottom: 45px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* 🔥 BIGGER BUTTONS */
+.landing-buttons {
+  display: flex;
+  gap: 28px;
 }
 
-.card {
-  padding: 2em;
+.landing-buttons button {
+  padding: 16px 42px;     /* ⬆️ increased */
+  font-size: 1.25rem;     /* ⬆️ increased */
+  border-radius: 10px;
+  border: none;
+  background-color: #111827;
+  color: white;
+  cursor: pointer;
 }
 
-.read-the-docs {
-  color: #888;
+.landing-buttons button:hover {
+  background-color: #2563eb;
 }
+
+.app-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.page-center {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.page-heading {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #222;
+}
+.login-box {
+  background-color: #111;
+  padding: 30px 35px;
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.wide-box {
+  min-width: 420px;
+}
+
+.login-box select,
+.login-box button {
+  padding: 10px 14px;
+  font-size: 15px;
+  border-radius: 8px;
+}
+
+.back-btn {
+  align-self: flex-start;
+  margin-bottom: 15px;
+  background: none;
+  border: none;
+  color: #1976d2;
+  font-size: 15px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.back-btn:hover {
+  text-decoration: underline;
+}
+
+.timetable-page {
+  margin-top: 30px;
+  width: 90%;
+}
+
+.timetable-row {
+  padding: 8px;
+  border-bottom: 1px solid #ccc;
+}
+
+

@@ -1,41 +1,87 @@
 import { useState } from "react";
+
 import StudentLogin from "./student/StudentLogin";
 import StudentDashboard from "./student/StudentDashboard";
+
 import AdminLogin from "./admin/AdminLogin";
 import AdminPanel from "./AdminPanel";
 
-export default function App(){
+import TeacherLogin from "./teacher/TeacherLogin";
+import TeacherHome from "./teacher/TeacherHome";
+import TeacherStudentView from "./teacher/TeacherStudentView";
+import TeacherTimetable from "./teacher/TeacherTimetable";
+
+import "./App.css";
+
+export default function App() {
+  const [mode, setMode] = useState("select");
 
   const [student, setStudent] = useState(null);
-  const [admin, setAdmin] = useState(false);
+  const [adminLoggedIn, setAdminLoggedIn] = useState(false);
 
-  const [mode, setMode] = useState("select"); 
-  // "select" | "student" | "admin"
+  const [teacherLoggedIn, setTeacherLoggedIn] = useState(false);
+  const [teacherMode, setTeacherMode] = useState(null);
 
-  if(mode === "select"){
+  /* ================= LANDING ================= */
+  if (mode === "select") {
     return (
-      <div style={{textAlign:"center", marginTop:"150px"}}>
-        <button onClick={()=>setMode("student")} style={btn}>Student Login</button>
-        <button onClick={()=>setMode("admin")} style={btn2}>Admin Login</button>
+      <div className="landing">
+        <h1 className="landing-title">Timetable Management System</h1>
+        <p className="landing-subtitle">
+          Smart scheduling for students and administrators
+        </p>
+
+        <div className="landing-buttons">
+          <button onClick={() => setMode("student")}>Student Login</button>
+          <button onClick={() => setMode("admin")}>Admin Login</button>
+          <button onClick={() => setMode("teacher")}>Teacher Login</button>
+        </div>
       </div>
     );
   }
 
-  if(mode === "student" && !student){
+  /* ================= STUDENT ================= */
+  if (mode === "student" && !student) {
     return <StudentLogin onLogin={setStudent} />;
   }
 
-  if(mode === "admin" && !admin){
-    return <AdminLogin onAdminLogin={setAdmin} />;
+  if (mode === "student" && student) {
+    return <StudentDashboard loginData={student} />;
   }
 
-  return (
-    <div style={{color:"white"}}>
-      {mode === "student" && <StudentDashboard loginData={student} />}
-      {mode === "admin" && <AdminPanel />}
-    </div>
-  );
-}
+  /* ================= ADMIN ================= */
+  if (mode === "admin" && !adminLoggedIn) {
+    return <AdminLogin onAdminLogin={() => setAdminLoggedIn(true)} />;
+  }
 
-const btn = { padding:"15px", marginRight:"20px" };
-const btn2 = { padding:"15px", background:"red", color:"white" };
+  if (mode === "admin" && adminLoggedIn) {
+    return <AdminPanel />;
+  }
+
+  /* ================= TEACHER ================= */
+  if (mode === "teacher" && !teacherLoggedIn) {
+    return <TeacherLogin onLogin={() => setTeacherLoggedIn(true)} />;
+  }
+
+  if (mode === "teacher" && teacherLoggedIn && teacherMode === null) {
+    return <TeacherHome onSelect={setTeacherMode} />;
+  }
+
+  if (mode === "teacher" && teacherMode === "studentTT") {
+    return (
+      <TeacherStudentView
+        goBack={() => setTeacherMode(null)}
+      />
+    );
+  }
+
+  if (mode === "teacher" && teacherMode === "teacherTT") {
+    return (
+      <TeacherTimetable
+        goBack={() => setTeacherMode(null)}
+      />
+    );
+  }
+
+  return null;
+}

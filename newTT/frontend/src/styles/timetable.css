@@ -1,66 +1,130 @@
+/* ===== PAGE LAYOUT ===== */
+.timetable-page {
+  padding: 40px 50px;
+  width: 100%;
+  background: #ffffff;
+}
+
+/* ===== HEADING ===== */
+.timetable-heading {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.timetable-heading h2 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 600;
+  color: #1f3c88;
+}
+
+.timetable-heading p {
+  margin-top: 8px;
+  color: #666;
+  font-size: 15px;
+}
+
+/* ===== TABLE ===== */
 .timetable {
   width: 100%;
   border-collapse: collapse;
-  background: #0b1220;
-  color: #e5e7eb;
+  table-layout: fixed;
+  font-size: 14px;
+  background: #ffffff;
 }
 
+/* borders */
 .timetable th,
 .timetable td {
-  border: 1px solid #334155;
-  padding: 6px;
+  border: 1px solid #222;
+  padding: 16px 14px;           /* ⬅ more vertical height */
+  vertical-align: top;
+}
+
+/* header row */
+.timetable th {
+  background: #eaf1ff;
+  font-weight: 600;
   text-align: center;
-  font-size: 13px;
+  color: #1f3c88;
 }
 
-.day {
+/* day column */
+.timetable .day {
+  background: #f4f7fb;
   font-weight: bold;
-  background: #020617;
+  text-align: center;
+  width: 110px;
+  color: #1f3c88;
 }
 
-.break {
-  background: #1e293b;
-  font-weight: bold;
+/* free slot */
+.timetable .free {
+  text-align: center;
+  color: #aaa;
+  font-style: italic;
 }
 
-.lunch {
-  background: #312e81;
+/* ===== BREAKS ===== */
+.timetable .break {
+  background: #ededed;
+  text-align: center;
+  font-weight: 600;
+  color: #666;
 }
 
-.free {
-  color: #64748b;
+.timetable .break.lunch {
+  background: #e2efe6;         /* soft green */
+  color: #2f5d3a;
 }
 
+/* ===== SUBJECT BLOCK ===== */
 .subject {
-  font-weight: bold;
-  color: #e0f2fe;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #1f3c88;
 }
 
 .teacher {
   font-size: 13px;
-  color: #93c5fd;
+  color: #222;
 }
 
 .room {
   font-size: 12px;
-  color: #cbd5f5;
+  color: #555;
 }
 
+/* ===== LAB / MULTI ROW ===== */
 .lab {
-  background: #1e3a8a;
-}
-
-.lab-details {
-  margin-top: 4px;
-  font-size: 12px;
+  background: #f2f7ff;         /* very light blue */
 }
 
 .lab-row {
-  color: #fde68a;
-  margin-bottom: 2px;
+  margin-top: 8px;
+  font-size: 13px;
+  border-top: 1px dashed #aaa;
+  padding-top: 6px;
 }
 
-.lab-subject {
-  color: #a5f3fc;
-  font-weight: 600;
+/* elective highlight */
+.elective {
+  background: #eef6ff;
+}
+
+/* ===== SPACING ===== */
+.timetable td > div {
+  margin-bottom: 6px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .timetable {
+    font-size: 12px;
+  }
+
+  .timetable-heading h2 {
+    font-size: 24px;
+  }
 }

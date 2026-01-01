@@ -26,14 +26,12 @@ export default function StudentTimetable({
 
   useEffect(() => {
     if (!divisionId) return;
-
     api
       .get(`/student/timetable?divisionId=${divisionId}`)
       .then((res) => setData(res.data))
       .catch(() => setData([]));
   }, [divisionId]);
 
-  /* 🔥 GROUP BY day + HH:mm (elective-safe) */
   const grouped = {};
   data.forEach((c) => {
     const time = c.startTime.substring(0, 5);
@@ -43,10 +41,13 @@ export default function StudentTimetable({
   });
 
   return (
-    <div>
-      <h2>
-        Semester {semesterId} – Division {divisionName}
-      </h2>
+    <div className="timetable-page">
+  <div className="timetable-heading">
+  <h3>
+    Semester {semesterId} – Division {divisionName}
+  </h3>
+  
+</div>
 
       <table className="timetable">
         <thead>
@@ -59,122 +60,35 @@ export default function StudentTimetable({
         </thead>
 
         <tbody>
-          {DAYS.map((day, dIndex) => {
-            let skip = 0;
+          {DAYS.map((day, dIndex) => (
+            <tr key={day}>
+              <td className="day">{day}</td>
 
-            return (
-              <tr key={day}>
-                <td className="day">{day}</td>
+              {TIME_SLOTS.map((slot, i) => {
+                if (slot.break === "SHORT")
+                  return <td key={i} className="break">BREAK</td>;
 
-                {TIME_SLOTS.map((slot, i) => {
-                  if (skip > 0) {
-                    skip--;
-                    return null;
-                  }
+                if (slot.break === "LUNCH")
+                  return <td key={i} className="lunch">LUNCH</td>;
 
-                  /* BREAK */
-                  if (slot.break === "SHORT")
-                    return (
-                      <td key={i} className="break">
-                        BREAK
-                      </td>
-                    );
+                const key = `${dIndex + 1}-${slot.key}`;
+                const entries = grouped[key];
 
-                  /* LUNCH */
-                  if (slot.break === "LUNCH")
-                    return (
-                      <td key={i} className="break lunch">
-                        LUNCH
-                      </td>
-                    );
+                if (!entries)
+                  return <td key={i} className="free">—</td>;
 
-                  const key = `${dIndex + 1}-${slot.key}`;
-                  const entries = grouped[key];
+                const first = entries[0];
 
-                  if (!entries)
-                    return (
-                      <td key={i} className="free">
-                        —
-                      </td>
-                    );
-
-                  const first = entries[0];
-
-                  const isElective = first.divisionId === null;
-                  const isLab = first.sessionType === "LAB" && !isElective;
-                  const isTut = first.sessionType === "TUT";
-
-                  if (isLab) skip = 1;
-
-                  return (
-                    <td
-                      key={i}
-                      colSpan={isLab ? 2 : 1}
-                      className={`${isLab ? "lab" : ""} ${
-                        isElective ? "elective" : ""
-                      }`}
-                    >
-                      {/* 🔹 LECTURE / ELECTIVE */}
-                      {!isLab && !isTut && (
-                        <>
-                          <div className="subject">
-                            {first.subjectName}
-                            {isElective && (
-                              <span className="badge">ELECTIVE</span>
-                            )}
-                          </div>
-
-                          {first.teacherCode && (
-                            <div className="teacher">
-                              {first.teacherCode}
-                            </div>
-                          )}
-
-                          {first.roomNumber && (
-                            <div className="room">
-                              {first.roomNumber}
-                            </div>
-                          )}
-                        </>
-                      )}
-
-                      {/* 🔹 TUTORIAL (1 HR, batch-wise) */}
-                      {isTut && (
-                        <>
-                          <div className="subject">
-                            {first.subjectName}
-                          </div>
-                          {entries.map((e, idx) => (
-                            <div key={idx} className="lab-row">
-                              {e.batchName && <b>{e.batchName}</b>}{" "}
-                              {e.teacherCode} – {e.roomNumber}
-                            </div>
-                          ))}
-                        </>
-                      )}
-
-                      {/* 🔹 LAB (2 HR merged, batch-wise) */}
-                      {isLab && (
-                        <div className="lab-details">
-                          {entries.map((e, idx) => (
-                            <div key={idx} className="lab-row">
-                              {e.batchName && (
-                                <>
-                                  <b>{e.batchName}</b> :{" "}
-                                </>
-                              )}
-                              {e.subjectName} – {e.teacherCode} –{" "}
-                              {e.roomNumber}
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
+                return (
+                  <td key={i} className="cell">
+                    <div className="subject">{first.subjectName}</div>
+                    <div className="teacher">{first.teacherCode}</div>
+                    <div className="room">{first.roomNumber}</div>
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

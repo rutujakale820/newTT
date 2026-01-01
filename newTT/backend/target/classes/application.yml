@@ -1,15 +1,16 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/timetabler?useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/timetable?useSSL=false&serverTimezone=UTC
     username: root
     password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver   # 🔥 THIS WAS MISSING
 
   jpa:
     hibernate:
-      ddl-auto: none   # <===== THIS FIXES EVERYTHING
+      ddl-auto: none
     show-sql: false
     properties:
-      hibernate.hbm2ddl.auto: none   # <==== REQUIRED for Hibernate 6
+      hibernate.hbm2ddl.auto: none
 
 logging:
   level:

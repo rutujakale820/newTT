@@ -1,8 +1,8 @@
 import { useState } from "react";
 import api from "../api/api";
+import "../styles/timetable.css";
 
 export default function AdminLogin({ onAdminLogin }) {
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -13,63 +13,42 @@ export default function AdminLogin({ onAdminLogin }) {
     try {
       const res = await api.post("/admin/login", { email, password });
 
-      if(res.data.status === "OK"){
+      if (res.data.status === "OK") {
+        localStorage.setItem("adminLoggedIn", "true");
         onAdminLogin(true);
       } else {
         setError(res.data.message);
       }
-
     } catch {
       setError("Login failed");
     }
   };
 
   return (
-    <div style={box}>
-      <h2>Admin Login</h2>
+    <div className="login-container">
+      <div className="login-box admin">
+        <h2>Admin Login</h2>
 
-      <input
-        placeholder="Email"
-        value={email}
-        onChange={(e)=>setEmail(e.target.value)}
-        style={input}
-      />
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+        />
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e)=>setPassword(e.target.value)}
-        style={input}
-      />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+        />
 
-      {error && <p style={{color:"red"}}>{error}</p>}
+        {error && <p className="error">{error}</p>}
 
-      <button onClick={login} style={button}>Login</button>
+        <button className="admin-btn" onClick={login}>
+          Login
+        </button>
+      </div>
     </div>
   );
 }
-
-const box = {
-  width: 320,
-  margin: "100px auto",
-  padding: 20,
-  borderRadius: 10,
-  background: "#1e1e1e",
-  color: "white",
-};
-
-const input = {
-  width: "100%",
-  padding: 8,
-  marginBottom: 10,
-};
-
-const button = {
-  width: "100%",
-  padding: 10,
-  background: "#ff5e5e",
-  color: "white",
-  border: "none",
-  cursor: "pointer",
-};

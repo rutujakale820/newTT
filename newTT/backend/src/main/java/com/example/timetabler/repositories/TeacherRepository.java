@@ -6,8 +6,20 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface TeacherRepository extends JpaRepository<Teacher, Long> {
+
+    /* =========================
+       🔐 TEACHER LOGIN SUPPORT
+       ========================= */
+
+    Optional<Teacher> findByEmailAndEmployeeId(String email, String employeeId);
+
+    /* =========================
+       📅 TIMETABLE CONSTRAINT
+       ========================= */
 
     @Query("""
         select count(sc) = 0
